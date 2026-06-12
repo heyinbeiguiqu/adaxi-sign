@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adaxi 签到</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div>
+          <h1>Adaxi 签到面板</h1>
+          <p class="subtitle">查看套餐流量信息，一键完成签到</p>
+        </div>
+        <button id="signBtn" class="btn btn-primary">立即签到</button>
+      </header>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>流量套餐信息</h2>
+          <button id="refreshBtn" class="btn btn-secondary">刷新</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>用户名</th>
+                <th>套餐名称</th>
+                <th>剩余流量</th>
+                <th>已使用流量</th>
+                <th>订阅链接</th>
+              </tr>
+            </thead>
+            <tbody id="infoTable">
+              <tr>
+                <td colspan="5" class="empty">加载中...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>

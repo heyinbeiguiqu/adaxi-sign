@@ -1,6 +1,6 @@
 # Adaxi 签到助手
 
-基于 [adaxi.net](https://adaxi.net) 接口的自动签到工具，提供 Web 面板与命令行两种使用方式。
+基于 [adaxi.net](https://adaxi.net) 接口的自动签到工具，提供 Web 面板、Windows 批处理脚本与命令行三种使用方式。
 
 ## 项目背景
 
@@ -14,6 +14,7 @@
 - 一键签到（自动获取验证码并识别）
 - 展示套餐名称、剩余流量、已使用流量
 - 生成订阅链接（`https://adaxi.net/sub?token=...`）
+- Windows 下可双击 `sign.bat` 快速签到
 - Web 页面支持 Toast 提示签到结果
 
 ## 项目结构
@@ -22,7 +23,9 @@
 adaxi/
 ├── lib/adaxi.js      # 核心 API 逻辑（登录、验证码、签到、用户信息）
 ├── server.js         # Express 本地服务
+├── sign.bat          # Windows 一键签到脚本
 ├── public/           # Web 前端页面
+├── eng.traineddata   # OCR 本地语言包
 ├── .env.example      # 环境变量模板
 └── package.json
 ```
@@ -40,7 +43,11 @@ npm install
 复制模板并填写你自己的账号信息：
 
 ```bash
+# Linux / macOS
 cp .env.example .env
+
+# Windows
+copy .env.example .env
 ```
 
 `.env` 配置项说明：
@@ -53,15 +60,13 @@ cp .env.example .env
 
 > `.env` 已加入 `.gitignore`，请勿将真实账号信息提交到仓库。
 
-## 注意事项
+### 3. Windows 一键签到（推荐）
 
-签到流程会自动获取图片验证码，并通过 Tesseract.js OCR 识别字符。由于 OCR 并非 100% 准确，**存在一定识别失败率**。
+完成上述配置后，**双击项目根目录下的 `sign.bat`** 即可执行签到。
 
-若签到失败并提示「验证码错误」，通常不是账号或接口问题，而是 OCR 识别偏差。此时**多点击几次「立即签到」按钮**即可，每次都会重新拉取验证码并再次识别。
+脚本会自动检查 Node.js 与 `.env`，并在控制台输出验证码识别结果、签到状态、剩余流量、已用流量及订阅链接。
 
-命令行方式同理，可重复执行 `npm run sign` 重试。
-
-### 3. 启动 Web 面板
+### 4. 启动 Web 面板
 
 ```bash
 npm start
@@ -71,11 +76,23 @@ npm start
 
 若 8080 端口被占用，服务会自动尝试 8081、8082 等端口，也可在 `.env` 中修改 `PORT`。
 
-### 4. 命令行签到（可选）
+### 5. 命令行签到（可选）
 
 ```bash
 npm run sign
 ```
+
+## 注意事项
+
+签到流程会自动获取图片验证码，并通过 Tesseract.js OCR 识别字符。由于 OCR 并非 100% 准确，**存在一定识别失败率**。
+
+若签到失败并提示「验证码错误」，通常不是账号或接口问题，而是 OCR 识别偏差。此时可：
+
+- Web 面板：**多点击几次「立即签到」按钮**
+- Windows：重新**双击 `sign.bat`**
+- 命令行：重复执行 `npm run sign`
+
+每次重试都会重新拉取验证码并再次识别。
 
 ## API 说明
 

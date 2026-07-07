@@ -1,5 +1,7 @@
 @echo off
 cd /d "%~dp0"
+
+:main
 set EXIT_CODE=1
 
 where node >nul 2>&1
@@ -37,5 +39,8 @@ echo Done.
 
 :end
 echo.
-pause
-exit /b %EXIT_CODE%
+echo Press Enter to run again. Close this window to exit.
+set "__rerun="
+set /p "__rerun=> "
+echo.
+goto main

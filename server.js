@@ -21,14 +21,12 @@ app.get("/api/user", async (_req, res) => {
 app.post("/api/sign", async (req, res) => {
   try {
     const { captchaText } = req.body || {};
-    const result = await runSign(captchaText);
-    const { signResult, userInfo } = result;
+    const { signResult, userInfo } = await runSign(captchaText);
     const success = signResult.message === "签到成功";
 
     res.json({
       ok: success,
       message: signResult.message,
-      reward: signResult.data,
       data: userInfo,
     });
   } catch (error) {

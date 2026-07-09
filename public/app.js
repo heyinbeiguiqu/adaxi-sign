@@ -59,21 +59,15 @@ async function handleSign() {
   try {
     const response = await fetch("/api/sign", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({}),
     });
     const result = await response.json();
 
-    if (result.ok) {
-      showToast(result.message || "签到成功", "success");
-      if (result.data) {
-        renderTable(result.data);
-      }
-    } else {
-      showToast(result.message || "签到失败", "error");
-      if (result.data) {
-        renderTable(result.data);
-      }
+    showToast(
+      result.message || (result.ok ? "签到成功" : "签到失败"),
+      result.ok ? "success" : "error",
+    );
+    if (result.data) {
+      renderTable(result.data);
     }
   } catch (error) {
     showToast(error.message, "error");
